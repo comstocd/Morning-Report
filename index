@@ -6,466 +6,658 @@
     <title>Morning Report - CLL Case</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #fff; color: #2c3e50; line-height: 1.6; }
-        .slide { display: none; padding: 40px; min-height: 100vh; }
-        .slide.active { display: block; }
-        h1 { font-size: 2.2em; color: #2c3e50; margin-bottom: 20px; border-bottom: 4px solid #3498db; padding-bottom: 10px; }
-        h2 { font-size: 1.8em; color: #3498db; margin: 25px 0 15px 0; }
-        h3 { font-size: 1.4em; color: #2c3e50; margin: 20px 0 10px 0; }
-        .box { background: #ecf0f1; padding: 20px; margin: 20px 0; border-radius: 8px; border-left: 5px solid #3498db; }
-        .warning { background: #fff3cd; border-left-color: #f39c12; }
-        .critical { background: #f8d7da; border-left-color: #e74c3c; }
-        .success { background: #d4edda; border-left-color: #27ae60; }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: #ffffff;
+            color: #2c3e50;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+        
+        .slide {
+            display: none;
+            min-height: 100vh;
+            padding: 60px 40px;
+        }
+        
+        .slide.active {
+            display: block;
+        }
+        
+        h1 {
+            font-size: 2.5em;
+            color: #2c3e50;
+            margin-bottom: 20px;
+            border-bottom: 4px solid #3498db;
+            padding-bottom: 10px;
+        }
+        
+        h2 {
+            font-size: 2em;
+            color: #3498db;
+            margin: 30px 0 15px 0;
+        }
+        
+        h3 {
+            font-size: 1.5em;
+            color: #2c3e50;
+            margin: 20px 0 10px 0;
+        }
+        
+        .box {
+            background: #ecf0f1;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+            border-left: 5px solid #3498db;
+        }
+        
+        .warning-box {
+            background: #fff3cd;
+            border-left-color: #f39c12;
+        }
+        
+        .critical-box {
+            background: #f8d7da;
+            border-left-color: #e74c3c;
+        }
+        
+        .success-box {
+            background: #d4edda;
+            border-left-color: #27ae60;
+        }
+        
         ul { margin: 15px 0 15px 40px; }
-        li { margin: 8px 0; font-size: 1.05em; }
-        table { width: 100%; border-collapse: collapse; margin: 20px 0; }
-        th, td { padding: 12px; text-align: left; border-bottom: 1px solid #ddd; }
-        th { background: #2c3e50; color: white; }
+        li { margin: 10px 0; font-size: 1.1em; }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        
+        th {
+            background: #2c3e50;
+            color: white;
+        }
+        
         .high { color: #e74c3c; font-weight: bold; }
         .low { color: #3498db; font-weight: bold; }
-        .nav { position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%); background: white; padding: 15px 30px; border-radius: 50px; box-shadow: 0 4px 15px rgba(0,0,0,0.2); display: flex; gap: 20px; z-index: 1000; }
-        button { background: #3498db; color: white; border: none; padding: 12px 30px; border-radius: 25px; font-size: 1.1em; cursor: pointer; font-weight: bold; }
-        button:hover { background: #2c3e50; }
-        button:disabled { background: #95a5a6; cursor: not-allowed; }
-        .counter { position: fixed; top: 20px; right: 20px; background: #2c3e50; color: white; padding: 10px 20px; border-radius: 20px; font-weight: bold; z-index: 1000; }
-        @media (max-width: 768px) { .slide { padding: 30px 20px 120px 20px; } h1 { font-size: 1.8em; } }
+        
+        .nav-buttons {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: white;
+            padding: 15px 30px;
+            border-radius: 50px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            display: flex;
+            gap: 20px;
+        }
+        
+        button {
+            background: #3498db;
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 25px;
+            font-size: 1.1em;
+            cursor: pointer;
+            font-weight: bold;
+        }
+        
+        button:hover {
+            background: #2c3e50;
+        }
+        
+        button:disabled {
+            background: #95a5a6;
+            cursor: not-allowed;
+        }
+        
+        .counter {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: #2c3e50;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 20px;
+            font-weight: bold;
+        }
     </style>
 </head>
 <body>
-    <div class="counter"><span id="curr">1</span>/<span id="tot">15</span></div>
-    
-    <!-- SLIDE 1 -->
-    <div class="slide active">
-        <h1>Learning From Complex Cases</h1>
-        <h2>82-Year-Old Male with Recurrent Pneumonia</h2>
-        <div class="box" style="margin-top:30px;">
-            <h3>Learning Objectives</h3>
-            <ul>
-                <li>Develop systematic chart review approaches</li>
-                <li>Recognize infection risk in CLL</li>
-                <li>Apply clinical reasoning when labs diverge from clinical picture</li>
-                <li>Implement antibiotic stewardship</li>
-                <li>Identify quality improvement opportunities</li>
-            </ul>
-        </div>
-        <div class="warning" style="margin-top:30px;">
-            <p><strong>Note:</strong> Real de-identified case focused on learning and systems improvement.</p>
-        </div>
+    <div class="counter">
+        <span id="current">1</span> / <span id="total">10</span>
     </div>
 
-    <!-- SLIDE 2 -->
-    <div class="slide">
-        <h1>Initial Presentation</h1>
-        <div class="box">
-            <h3>Chief Complaint</h3>
-            <p style="font-size:1.3em;font-weight:bold;">"Altered mental status, breathing problem"</p>
+    <div class="container">
+        <!-- SLIDE 1 -->
+        <div class="slide active">
+            <h1>Learning From Complex Cases</h1>
+            <h2>82-Year-Old Male with Recurrent Pneumonia</h2>
+            
+            <div class="box" style="margin-top: 40px;">
+                <h3>Learning Objectives</h3>
+                <ul>
+                    <li>Develop systematic approaches to comprehensive chart review</li>
+                    <li>Recognize infection risk in chronic lymphoproliferative disorders</li>
+                    <li>Apply clinical reasoning when lab and clinical findings diverge</li>
+                    <li>Implement antibiotic stewardship principles</li>
+                    <li>Identify opportunities for quality improvement</li>
+                </ul>
+            </div>
+            
+            <div class="warning-box">
+                <p><strong>Note:</strong> Real de-identified case. Focus on learning and systems improvement.</p>
+            </div>
         </div>
-        <div class="box">
+
+        <!-- SLIDE 2 -->
+        <div class="slide">
+            <h1>Initial Presentation</h1>
+            
+            <div class="box">
+                <h3>Chief Complaint</h3>
+                <p style="font-size: 1.3em; font-weight: bold;">"Altered mental status, breathing problem"</p>
+            </div>
+            
             <h3>Timeline</h3>
-            <p><strong>Day -8 (First Admission):</strong></p>
-            <ul>
-                <li>Neighbor found patient confused, SOB × several days</li>
-                <li>Unable to provide history (dementia)</li>
-                <li>CXR: Bibasilar opacities</li>
-                <li>Started IV antibiotics, improved</li>
-            </ul>
-            <p style="margin-top:15px;"><strong>Day 5:</strong> Left AMA - "Tired of hospital"</p>
-            <p style="margin-top:10px;"><strong>48 hours later:</strong> Re-presentation</p>
-            <ul>
-                <li>Found somnolent, SpO2 84%</li>
-                <li>Initially hypotensive (BP 65/45)</li>
-                <li>Transferred to our facility</li>
-            </ul>
+            <div class="box">
+                <p><strong>First Admission (Day -8):</strong></p>
+                <ul>
+                    <li>Neighbor found patient confused, short of breath × several days</li>
+                    <li>Unable to provide history (dementia)</li>
+                    <li>CXR: Bibasilar opacities</li>
+                    <li>Started IV antibiotics, improved</li>
+                </ul>
+            </div>
+            
+            <div class="warning-box">
+                <p><strong>Day 5:</strong> Left Against Medical Advice</p>
+                <ul>
+                    <li>Had capacity, alert & oriented × 3</li>
+                    <li>Family wanted placement, patient refused</li>
+                    <li>"Tired of being in hospital"</li>
+                </ul>
+            </div>
+            
+            <div class="critical-box">
+                <p><strong>48 Hours Later:</strong> Re-presentation</p>
+                <ul>
+                    <li>Found somnolent by neighbors</li>
+                    <li>SpO2 84% on room air</li>
+                    <li>Initially hypotensive (BP 65/45)</li>
+                    <li>Transferred to our facility</li>
+                </ul>
+            </div>
+            
+            <p><strong>Context:</strong> Lives alone, progressive dementia, medication non-compliance, still driving</p>
         </div>
-        <p><strong>Context:</strong> Lives alone, progressive dementia, medication non-compliance, still driving</p>
-    </div>
 
-    <!-- SLIDE 3 -->
-    <div class="slide">
-        <h1>Laboratory Data (Day 1)</h1>
-        <h3>Complete Blood Count</h3>
-        <table>
-            <tr><th>Test</th><th>Value</th><th>Reference</th></tr>
-            <tr><td>WBC</td><td class="high">13.61 K/µL</td><td>4.23-9.07</td></tr>
-            <tr><td>Hemoglobin</td><td class="low">10.8 g/dL</td><td>13.7-17.5</td></tr>
-            <tr><td>Hematocrit</td><td class="low">33.4%</td><td>40.1-51.0</td></tr>
-            <tr><td>Platelets</td><td>220 K/µL</td><td>163-337</td></tr>
-        </table>
-        <p><em>Hemoglobin documented as "at baseline"</em></p>
-        <h3 style="margin-top:25px;">Renal Function</h3>
-        <table>
-            <tr><th>Test</th><th>Value</th><th>Reference</th></tr>
-            <tr><td>BUN</td><td class="high">39 mg/dL</td><td>8-23</td></tr>
-            <tr><td>Creatinine</td><td class="high">2.60 mg/dL</td><td>0.67-1.17</td></tr>
-            <tr><td>eGFR</td><td class="low">24 mL/min</td><td>>60</td></tr>
-        </table>
-        <div class="box" style="margin-top:20px;">
-            <p><strong>Additional:</strong> Troponin 27→31→32 (stable) | BNP 3,743 | Procalcitonin 0.07 | Virals negative</p>
-        </div>
-        <div class="warning">
-            <p><strong>Pattern:</strong> Leukocytosis + chronic anemia + very low procalcitonin. What does this suggest?</p>
-        </div>
-    </div>
-
-    <!-- SLIDE 4 -->
-    <div class="slide">
-        <h1>CT Chest Findings</h1>
-        <div class="success"><p><strong>Finding #1:</strong> No acute pulmonary embolism ✓</p></div>
-        <div class="box">
-            <p><strong>Finding #2:</strong> RLL consolidation + scattered ground-glass opacities → Pneumonia ± aspiration</p>
-        </div>
-        <div class="critical">
-            <h3>Finding #3: THE CRITICAL OBSERVATION</h3>
-            <p style="font-size:1.2em;margin:15px 0;font-style:italic;">
-                "Constellation of findings suggestive of <strong>lymphomatous disorder</strong> with multiple areas of <strong>lymphadenopathy</strong> in chest and upper abdomen"
-            </p>
-            <p><strong>Locations:</strong> Axillary (bilateral), Mediastinal, Hilar (bilateral), Retroperitoneal, Porta hepatis</p>
-            <p style="font-size:1.3em;margin-top:15px;"><strong>= GENERALIZED LYMPHADENOPATHY</strong></p>
-        </div>
-        <p style="text-align:center;font-size:1.3em;font-weight:bold;margin-top:30px;color:#e74c3c;">
-            The radiologist is telling us: lymphoproliferative disorder
-        </p>
-    </div>
-
-    <!-- SLIDE 5 -->
-    <div class="slide">
-        <h1>What Was Actually in the Chart</h1>
-        <div class="critical">
-            <h2>Hematology Note from 3 Months Prior (August 2025)</h2>
-            <p>Comprehensive note - 11 weeks before admission</p>
-        </div>
-        <div class="warning" style="margin-top:20px;">
-            <h3>Established Diagnosis</h3>
-            <p style="font-size:1.4em;font-weight:bold;color:#e74c3c;">Small Lymphocytic Lymphoma / Chronic Lymphocytic Leukemia (SLL/CLL)</p>
-            <ul>
-                <li><strong>Diagnosed:</strong> July 2024 (16 months prior)</li>
-                <li><strong>Stage:</strong> Lugano Stage III (above & below diaphragm)</li>
-                <li><strong>Treatment:</strong> Active surveillance (watch & wait)</li>
-                <li><strong>Last hematology visit:</strong> August 2025</li>
-                <li><strong>Due for follow-up:</strong> November 2025 (when he got admitted!)</li>
-            </ul>
-        </div>
-        <div class="box" style="margin-top:20px;">
-            <h3>Complete Diagnostic Workup on File</h3>
-            <ul>
-                <li>Flow cytometry: 90% clonal B-cells (CD19+, CD5+, CD23+, dim lambda)</li>
-                <li>Kappa:Lambda ratio: 0.01 (markedly restricted, normal ~2:1)</li>
-                <li>PET CT: Confirmed Stage III disease</li>
-                <li>FISH: ATM deletion, 13q14.2</li>
-                <li>IGVH: Non-mutated</li>
-                <li>August labs: WBC 7.34, <strong>Absolute Lymphocyte Count 3.48</strong> (elevated baseline)</li>
-            </ul>
-        </div>
-    </div>
-
-    <!-- SLIDE 6 -->
-    <div class="slide">
-        <h1>Hospital Course: Days 2-3</h1>
-        <div class="success">
-            <h3>Day 2 - Dramatic Clinical Improvement</h3>
-            <ul>
-                <li><strong>Weaned to room air</strong> ✓</li>
-                <li>Afebrile throughout ✓</li>
-                <li>Hemodynamically stable ✓</li>
-                <li>No symptoms ✓</li>
-                <li>Echo: EF 60-65%, no vegetation</li>
-                <li>Troponin flat - demand ischemia</li>
-                <li>Cr: 2.60 → 2.31 (improving)</li>
-            </ul>
-            <p><strong>Antibiotics:</strong> Ceftriaxone + Azithromycin (Day 1/5)</p>
-        </div>
-        <div class="warning" style="margin-top:20px;">
-            <h3>Day 3 - Laboratory Change</h3>
-            <p><strong>Clinical:</strong> SpO2 95% RA, afebrile, stable, wants to go home</p>
-            <table style="margin-top:15px;">
-                <tr><th>Test</th><th>Day 1</th><th>Day 3</th><th>Change</th></tr>
-                <tr><td>WBC</td><td>13.61</td><td class="high">14.98</td><td>↑ 10%</td></tr>
-                <tr><td>Hgb</td><td>10.8</td><td class="low">9.9</td><td>↓ 8%</td></tr>
+        <!-- SLIDE 3 -->
+        <div class="slide">
+            <h1>Laboratory Data (Day 1)</h1>
+            
+            <h3>Complete Blood Count</h3>
+            <table>
+                <tr><th>Test</th><th>Value</th><th>Reference</th></tr>
+                <tr><td>WBC</td><td class="high">13.61 K/µL</td><td>4.23-9.07</td></tr>
+                <tr><td>Hemoglobin</td><td class="low">10.8 g/dL</td><td>13.7-17.5</td></tr>
+                <tr><td>Hematocrit</td><td class="low">33.4%</td><td>40.1-51.0</td></tr>
+                <tr><td>Platelets</td><td>220 K/µL</td><td>163-337</td></tr>
             </table>
+            <p><em>Hemoglobin documented as "at baseline"</em></p>
+            
+            <h3>Renal Function</h3>
+            <table>
+                <tr><th>Test</th><th>Value</th><th>Reference</th></tr>
+                <tr><td>BUN</td><td class="high">39 mg/dL</td><td>8-23</td></tr>
+                <tr><td>Creatinine</td><td class="high">2.60 mg/dL</td><td>0.67-1.17</td></tr>
+                <tr><td>eGFR</td><td class="low">24 mL/min</td><td>>60</td></tr>
+            </table>
+            <p><strong>Stage 4 CKD</strong></p>
+            
+            <div class="box">
+                <h3>Additional Labs</h3>
+                <ul>
+                    <li><strong>Troponin:</strong> 27 → 31 → 32 (stable)</li>
+                    <li><strong>BNP:</strong> 3,743 (markedly elevated)</li>
+                    <li><strong>Procalcitonin:</strong> 0.07 (very low)</li>
+                    <li><strong>Viral panel:</strong> All negative (Flu, RSV, COVID)</li>
+                </ul>
+            </div>
+            
+            <div class="warning-box">
+                <p><strong>Pattern:</strong> Persistent leukocytosis + chronic anemia + very low procalcitonin</p>
+                <p>What does this constellation suggest?</p>
+            </div>
         </div>
-        <div class="critical" style="margin-top:20px;">
-            <h3>Decision Made</h3>
-            <p><strong>Antibiotic Escalation:</strong></p>
-            <ul>
-                <li>Discontinued ceftriaxone + azithromycin (after only 1 day)</li>
-                <li>Started piperacillin-tazobactam (Zosyn)</li>
-                <li><strong>Rationale:</strong> WBC trending upward</li>
-            </ul>
+
+        <!-- SLIDE 4 -->
+        <div class="slide">
+            <h1>CT Chest Findings</h1>
+            
+            <div class="success-box">
+                <h3>Finding #1</h3>
+                <p><strong>No acute pulmonary embolism</strong></p>
+            </div>
+            
+            <div class="box">
+                <h3>Finding #2: Pneumonia</h3>
+                <ul>
+                    <li>RLL consolidation</li>
+                    <li>Scattered bilateral ground-glass opacities</li>
+                    <li>Pattern: Pneumonia ± aspiration</li>
+                </ul>
+            </div>
+            
+            <div class="critical-box">
+                <h3>Finding #3: THE CRITICAL OBSERVATION</h3>
+                <p style="font-size: 1.2em; margin: 15px 0; font-style: italic;">
+                    "Constellation of findings suggestive of <strong>lymphomatous disorder</strong> with 
+                    multiple areas of <strong>lymphadenopathy</strong> in chest and upper abdomen"
+                </p>
+                
+                <p><strong>Lymphadenopathy locations:</strong></p>
+                <ul>
+                    <li>Axillary (bilateral)</li>
+                    <li>Mediastinal (multiple stations)</li>
+                    <li>Hilar (bilateral)</li>
+                    <li>Retroperitoneal</li>
+                    <li>Porta hepatis</li>
+                </ul>
+                
+                <p style="font-size: 1.3em; margin-top: 20px;">
+                    <strong>= GENERALIZED LYMPHADENOPATHY</strong>
+                </p>
+            </div>
+            
+            <p style="text-align: center; font-size: 1.3em; font-weight: bold; margin-top: 30px; color: #e74c3c;">
+                The radiologist is telling us: lymphoproliferative disorder
+            </p>
+        </div>
+
+        <!-- SLIDE 5 -->
+        <div class="slide">
+            <h1>What Was Actually in the Chart</h1>
+            
+            <div class="critical-box">
+                <h2>Hematology Note from 3 Months Prior (August 2025)</h2>
+                <p style="font-size: 1.2em;">Comprehensive note found - 11 weeks before this admission</p>
+            </div>
+            
+            <div class="warning-box">
+                <h3>Established Diagnosis</h3>
+                <p style="font-size: 1.4em; font-weight: bold; color: #e74c3c;">
+                    Small Lymphocytic Lymphoma / Chronic Lymphocytic Leukemia (SLL/CLL)
+                </p>
+                <ul>
+                    <li><strong>Diagnosed:</strong> July 2024 (16 months prior)</li>
+                    <li><strong>Stage:</strong> Lugano Stage III (above & below diaphragm)</li>
+                    <li><strong>Treatment:</strong> Active surveillance (watch & wait)</li>
+                    <li><strong>Last hematology visit:</strong> August 2025</li>
+                    <li><strong>Due for follow-up:</strong> November 2025 (when admitted!)</li>
+                </ul>
+            </div>
+            
+            <div class="box">
+                <h3>Diagnostic Workup on File</h3>
+                <ul>
+                    <li><strong>Flow cytometry (July 2024):</strong> 90% clonal B-cells</li>
+                    <li><strong>Immunophenotype:</strong> CD19+, CD5+, CD23+, dim lambda</li>
+                    <li><strong>Kappa:Lambda ratio:</strong> 0.01 (markedly restricted)</li>
+                    <li><strong>PET CT:</strong> Confirmed Stage III disease</li>
+                    <li><strong>FISH studies:</strong> ATM deletion, 13q14.2</li>
+                    <li><strong>IGVH:</strong> Non-mutated</li>
+                </ul>
+            </div>
+            
+            <div class="box">
+                <h3>Clinical Status in August (3 months ago)</h3>
+                <ul>
+                    <li>Feeling well, no B symptoms</li>
+                    <li>Independent in ADLs</li>
+                    <li>Active, driving, managing properties</li>
+                    <li>Physical exam: 2cm cervical lymph node palpable</li>
+                    <li>Labs: WBC 7.34, <strong>Absolute Lymphocyte Count 3.48</strong> (elevated)</li>
+                </ul>
+            </div>
+            
+            <div class="success-box">
+                <p><strong>Follow-up plan documented:</strong> "Return to clinic in 3 months with repeat labs"</p>
+                <p><strong>Patient missed this appointment because he was hospitalized</strong></p>
+            </div>
+        </div>
+
+        <!-- SLIDE 6 -->
+        <div class="slide">
+            <h1>Hospital Course: Days 2-3</h1>
+            
+            <div class="success-box">
+                <h3>Day 2 - Dramatic Clinical Improvement</h3>
+                <ul>
+                    <li><strong>Weaned to room air</strong> - major improvement</li>
+                    <li>Afebrile throughout hospitalization</li>
+                    <li>Hemodynamically stable</li>
+                    <li>No chest pain, SOB, or other symptoms</li>
+                    <li><strong>Echo:</strong> EF 60-65%, normal function, no vegetation</li>
+                    <li><strong>Troponin:</strong> Flat trend - demand ischemia confirmed</li>
+                    <li><strong>Creatinine:</strong> 2.60 → 2.31 (improving)</li>
+                </ul>
+                <p><strong>Antibiotics:</strong> Ceftriaxone + Azithromycin (Day 1 of 5)</p>
+            </div>
+            
+            <div class="warning-box">
+                <h3>Day 3 - Laboratory Change</h3>
+                <p><strong>Clinical status:</strong></p>
+                <ul>
+                    <li>Patient wants to go home (same as first admission)</li>
+                    <li>SpO2 95% on room air</li>
+                    <li>Afebrile, stable vitals</li>
+                    <li>No symptoms</li>
+                </ul>
+                
+                <p style="margin-top: 20px;"><strong>Laboratory:</strong></p>
+                <table>
+                    <tr><th>Test</th><th>Day 1</th><th>Day 3</th><th>Change</th></tr>
+                    <tr><td>WBC</td><td>13.61</td><td class="high">14.98</td><td>↑ 10%</td></tr>
+                    <tr><td>Hemoglobin</td><td>10.8</td><td class="low">9.9</td><td>↓ 8%</td></tr>
+                    <tr><td>Creatinine</td><td>2.60</td><td>2.31</td><td>↓ Improving</td></tr>
+                </table>
+            </div>
+            
+            <div class="critical-box">
+                <h3>Decision Made</h3>
+                <p><strong>Antibiotic Escalation:</strong></p>
+                <ul>
+                    <li>Discontinued ceftriaxone (after only 1 day)</li>
+                    <li>Discontinued azithromycin (after only 1 day)</li>
+                    <li>Started piperacillin-tazobactam (Zosyn)</li>
+                </ul>
+                <p style="margin-top: 15px;"><strong>Rationale:</strong> WBC trending upward</p>
+            </div>
+        </div>
+
+        <!-- SLIDE 7 -->
+        <div class="slide">
+            <h1>Clinical Reasoning Challenge</h1>
+            
+            <div class="warning-box">
+                <h3>When Lab and Clinical Picture Diverge - Which Do You Trust?</h3>
+            </div>
+            
+            <div class="box">
+                <h3>Clinical Picture (Day 3)</h3>
+                <ul>
+                    <li>✓ Weaned to room air</li>
+                    <li>✓ Afebrile × 72 hours</li>
+                    <li>✓ Hemodynamically stable</li>
+                    <li>✓ No respiratory distress</li>
+                    <li>✓ Creatinine improving</li>
+                    <li>✓ No overnight events</li>
+                    <li>✓ Patient feels well enough to demand discharge</li>
+                </ul>
+                <p style="margin-top: 15px; font-weight: bold;">IDSA Guidelines: Clinical stability = treatment success</p>
+            </div>
+            
+            <div class="box">
+                <h3>Laboratory Findings</h3>
+                <ul>
+                    <li>WBC 13.61 → 14.98 (↑10%)</li>
+                    <li>No differential ordered</li>
+                    <li>Blood cultures negative</li>
+                    <li>Procalcitonin was 0.07 (very low)</li>
+                </ul>
+            </div>
+            
+            <div class="critical-box">
+                <h3>Understanding WBC in CLL</h3>
+                <p><strong>If CLL diagnosis had been recognized:</strong></p>
+                <ul>
+                    <li>WBC elevation represents <strong>baseline lymphocytosis from CLL</strong>, NOT treatment failure</li>
+                    <li>From August labs: Absolute Lymphocyte Count was 3.48 K/µL (elevated baseline)</li>
+                    <li>Should have ordered <strong>CBC with differential</strong> to distinguish:
+                        <ul>
+                            <li>Lymphocytes (from CLL - baseline elevation)</li>
+                            <li>vs Neutrophils (from infection)</li>
+                        </ul>
+                    </li>
+                </ul>
+                <p style="margin-top: 20px; font-weight: bold; font-size: 1.2em;">
+                    Total WBC alone is insufficient - ALWAYS check differential
+                </p>
+            </div>
+        </div>
+
+        <!-- SLIDE 8 -->
+        <div class="slide">
+            <h1>Teaching Point: Systematic Chart Review</h1>
+            
+            <div class="box">
+                <h2>The SEARCH Mnemonic</h2>
+                <p style="font-size: 1.2em; margin-bottom: 20px;">Systematic approach to prevent missing critical information</p>
+            </div>
+            
+            <div class="box">
+                <h3>S - SEARCH Systematically</h3>
+                <ul>
+                    <li>Use EMR keyword search: "biopsy," "pathology," "flow cytometry," "malignancy," "hematology"</li>
+                    <li>Search for specialty referrals</li>
+                    <li>Don't rely solely on recent notes or patient recall</li>
+                </ul>
+            </div>
+            
+            <div class="box">
+                <h3>E - EXAMINE Problem List</h3>
+                <ul>
+                    <li>Review both active AND inactive diagnoses</li>
+                    <li>Question why chronic conditions might be absent</li>
+                    <li>Look for diagnoses that "disappeared"</li>
+                </ul>
+            </div>
+            
+            <div class="box">
+                <h3>A - ASK Specific Questions</h3>
+                <ul>
+                    <li>"Have you ever had a biopsy of a lymph node?"</li>
+                    <li>"Do you see a cancer doctor or blood specialist?"</li>
+                    <li>"What medications did you used to take that you stopped?"</li>
+                    <li>For dementia patients: Obtain collateral from family</li>
+                </ul>
+            </div>
+            
+            <div class="box">
+                <h3>R - REVIEW Prior Imaging</h3>
+                <ul>
+                    <li>Compare current findings to prior studies</li>
+                    <li>Distinguish NEW from CHRONIC findings</li>
+                    <li>Chronicity completely changes management</li>
+                </ul>
+            </div>
+            
+            <div class="box">
+                <h3>C - CHECK Medications</h3>
+                <ul>
+                    <li>Prophylactic antibiotics → immunosuppression?</li>
+                    <li>Iron supplements → chronic anemia, why?</li>
+                    <li>Review discontinued medications</li>
+                </ul>
+            </div>
+            
+            <div class="box">
+                <h3>H - HOSPITAL/Specialty Records</h3>
+                <ul>
+                    <li>Search for pathology reports (past 2-3 years)</li>
+                    <li>Review discharge summaries</li>
+                    <li>Read specialty notes (hematology, oncology)</li>
+                    <li>Call subspecialists when questions arise</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- SLIDE 9 -->
+        <div class="slide">
+            <h1>CLL & Infection Risk</h1>
+            
+            <div class="critical-box">
+                <h3>Why CLL Patients Are Immunocompromised</h3>
+            </div>
+            
+            <div class="box">
+                <h3>1. Hypogammaglobulinemia (50-80% of patients)</h3>
+                <ul>
+                    <li>Decreased antibody production</li>
+                    <li>Risk: <em>S. pneumoniae, H. influenzae</em> (encapsulated organisms)</li>
+                    <li>Most common cause of infection in CLL</li>
+                </ul>
+            </div>
+            
+            <div class="box">
+                <h3>2. T-cell Dysfunction</h3>
+                <ul>
+                    <li>Impaired cell-mediated immunity</li>
+                    <li>Risk: Viral infections, intracellular bacteria</li>
+                </ul>
+            </div>
+            
+            <div class="box">
+                <h3>3. Neutropenia</h3>
+                <ul>
+                    <li>From disease or treatment</li>
+                    <li>Risk: Bacterial and fungal infections</li>
+                </ul>
+            </div>
+            
+            <div class="critical-box" style="margin-top: 30px;">
+                <h3>Critical Recognition</h3>
+                <p style="font-size: 1.3em; font-weight: bold;">
+                    Infection is the LEADING cause of morbidity and mortality in CLL
+                </p>
+                <ul>
+                    <li>Pneumonia is most common infection</li>
+                    <li>Recurrent sinopulmonary infections typical</li>
+                    <li>Both typical and opportunistic pathogens possible</li>
+                </ul>
+            </div>
+            
+            <div class="box">
+                <h3>Management for Hospitalized CLL Patients</h3>
+                <ul>
+                    <li><strong>Check immunoglobulins:</strong> IgG, IgA, IgM</li>
+                    <li><strong>IVIG candidate?</strong> If IgG <500 + recurrent infections</li>
+                    <li><strong>PJP prophylaxis:</strong> TMP-SMX if CD4 <200 or on treatment</li>
+                    <li><strong>Longer antibiotic course:</strong> 7-10 days vs 5 days</li>
+                    <li><strong>Coordinate with hematology</strong></li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- SLIDE 10 -->
+        <div class="slide">
+            <h1>Key Takeaways</h1>
+            
+            <div class="box">
+                <h3>1. Comprehensive Chart Review Is Essential</h3>
+                <p>Use the SEARCH mnemonic. Critical information is usually in the chart - you just need to find it systematically.</p>
+            </div>
+            
+            <div class="box">
+                <h3>2. CLL = Immunocompromised, Always</h3>
+                <p>Infection is leading cause of morbidity. Check IgG levels, consider prophylaxis, coordinate with hematology.</p>
+            </div>
+            
+            <div class="box">
+                <h3>3. Clinical Picture > Laboratory Values</h3>
+                <p>IDSA: Clinical stability = treatment success. WBC normalization not required. Always check CBC differential.</p>
+            </div>
+            
+            <div class="box">
+                <h3>4. Stewardship Applies to All Patients</h3>
+                <p>Appropriate empiric therapy. Avoid unnecessary escalation in improving patients. Standard CAP: 5 days if stable.</p>
+            </div>
+            
+            <div class="box">
+                <h3>5. Care Coordination Matters</h3>
+                <p>Contact established subspecialists. This patient missed his hematology appointment because he was hospitalized - his hematologist didn't know.</p>
+            </div>
+            
+            <div class="box">
+                <h3>6. Systems Thinking Prevents Future Gaps</h3>
+                <p>Multiple factors contribute to information gaps. Focus on system improvements, not individual blame. Learn from every case.</p>
+            </div>
+            
+            <div class="critical-box" style="margin-top: 40px; text-align: center;">
+                <h2>Focus on Learning and Systems Improvement</h2>
+                <p style="font-size: 1.2em; margin-top: 15px;">
+                    Excellence in medicine requires both individual diligence and robust systems that support comprehensive care
+                </p>
+            </div>
         </div>
     </div>
 
-    <!-- SLIDE 7 -->
-    <div class="slide">
-        <h1>Clinical Reasoning Challenge</h1>
-        <div class="warning">
-            <h3>When Lab and Clinical Picture Diverge - Which Do You Trust?</h3>
-        </div>
-        <div class="box" style="margin-top:20px;">
-            <h3>Clinical Picture (Day 3)</h3>
-            <ul>
-                <li>✓ Weaned to room air</li>
-                <li>✓ Afebrile × 72 hours</li>
-                <li>✓ Hemodynamically stable</li>
-                <li>✓ No respiratory distress</li>
-                <li>✓ Creatinine improving</li>
-                <li>✓ Patient feels well enough to demand discharge</li>
-            </ul>
-            <p style="margin-top:15px;font-weight:bold;">IDSA Guidelines: Clinical stability = treatment success</p>
-        </div>
-        <div class="critical" style="margin-top:20px;">
-            <h3>Understanding WBC in CLL</h3>
-            <p><strong>If CLL diagnosis had been recognized:</strong></p>
-            <ul>
-                <li>WBC 14.98 represents <strong>baseline lymphocytosis from CLL</strong>, NOT treatment failure</li>
-                <li>August labs: ALC was 3.48 K/µL (elevated baseline)</li>
-                <li>Should have ordered <strong>CBC with differential</strong> to distinguish lymphocytes (CLL) vs neutrophils (infection)</li>
-            </ul>
-            <p style="margin-top:20px;font-weight:bold;font-size:1.2em;">Total WBC alone is insufficient - ALWAYS check differential</p>
-        </div>
-    </div>
-
-    <!-- SLIDE 8 -->
-    <div class="slide">
-        <h1>Teaching: Systematic Chart Review</h1>
-        <div class="box">
-            <h2>The SEARCH Mnemonic</h2>
-            <p style="margin-bottom:20px;">Systematic approach to prevent missing critical information</p>
-        </div>
-        <div class="box">
-            <p><strong>S</strong> - SEARCH systematically: Use EMR keywords ("biopsy," "flow cytometry," "hematology")</p>
-        </div>
-        <div class="box">
-            <p><strong>E</strong> - EXAMINE problem list: Review both active AND inactive diagnoses</p>
-        </div>
-        <div class="box">
-            <p><strong>A</strong> - ASK specific questions: "Ever had lymph node biopsy?" "See a cancer doctor?"</p>
-        </div>
-        <div class="box">
-            <p><strong>R</strong> - REVIEW prior imaging: Compare current to prior - NEW vs CHRONIC changes management</p>
-        </div>
-        <div class="box">
-            <p><strong>C</strong> - CHECK medications: Prophylactic antibiotics? Iron supplements? Why?</p>
-        </div>
-        <div class="box">
-            <p><strong>H</strong> - HOSPITAL/specialty records: Search pathology, discharge summaries, subspecialty notes</p>
-        </div>
-        <div class="warning" style="margin-top:30px;">
-            <p><strong>This case:</strong> Hematology note, flow cytometry, prior imaging all documented. Just needed systematic search.</p>
-        </div>
-    </div>
-
-    <!-- SLIDE 9 -->
-    <div class="slide">
-        <h1>CLL & Infection Risk</h1>
-        <div class="critical">
-            <p style="font-size:1.3em;font-weight:bold;">Infection = LEADING cause of morbidity and mortality in CLL</p>
-        </div>
-        <div class="box" style="margin-top:20px;">
-            <h3>Why CLL Patients Are Immunocompromised</h3>
-            <p><strong>1. Hypogammaglobulinemia (50-80%):</strong> Decreased antibody production → S. pneumoniae, H. influenzae</p>
-            <p><strong>2. T-cell dysfunction:</strong> Impaired cell-mediated immunity → Viral infections</p>
-            <p><strong>3. Neutropenia:</strong> From disease or treatment</p>
-            <p><strong>4. Complement deficiency:</strong> Further increases encapsulated organism risk</p>
-        </div>
-        <div class="box" style="margin-top:20px;">
-            <h3>Management for Hospitalized CLL Patients</h3>
-            <ul>
-                <li><strong>Check immunoglobulins:</strong> IgG, IgA, IgM levels</li>
-                <li><strong>IVIG candidate?</strong> If IgG <500 + recurrent infections</li>
-                <li><strong>PJP prophylaxis:</strong> TMP-SMX if CD4 <200 or on treatment</li>
-                <li><strong>Longer antibiotic course:</strong> 7-10 days vs 5 days for standard CAP</li>
-                <li><strong>Coordinate with hematology</strong> before discharge</li>
-            </ul>
-        </div>
-    </div>
-
-    <!-- SLIDE 10 -->
-    <div class="slide">
-        <h1>Antibiotic Stewardship</h1>
-        <div class="box">
-            <h3>IDSA/ATS CAP Guidelines - Clinical Stability Criteria</h3>
-            <ul>
-                <li>✓ Afebrile (Temp <100°F) × 48-72 hours</li>
-                <li>✓ Hemodynamically stable</li>
-                <li>✓ Improving oxygenation</li>
-                <li>✓ Able to take oral medications</li>
-                <li>✓ Normal mental status or return to baseline</li>
-            </ul>
-            <p style="margin-top:15px;font-weight:bold;">Standard duration: 5 days if clinically stable | Immunocompromised: 7-10 days</p>
-        </div>
-        <div class="box" style="margin-top:20px;">
-            <h3>Initial Therapy (Day 1)</h3>
-            <p><strong>Ceftriaxone + Azithromycin:</strong></p>
-            <ul>
-                <li>✓ Appropriate for severe CAP</li>
-                <li>✓ Covers typical + atypical</li>
-                <li>✓ No renal adjustment needed</li>
-                <li>✓ Cost-effective</li>
-            </ul>
-        </div>
-        <div class="warning" style="margin-top:20px;">
-            <h3>Escalation (Day 3) to Zosyn</h3>
-            <ul>
-                <li>Broad anti-pseudomonal coverage (not needed)</li>
-                <li>Requires renal dose adjustment</li>
-                <li>Higher cost, resistance pressure, C. diff risk</li>
-            </ul>
-            <p style="margin-top:15px;font-weight:bold;">When patient meets clinical stability criteria, continue effective therapy rather than escalating based on isolated lab changes</p>
-        </div>
-    </div>
-
-    <!-- SLIDE 11 -->
-    <div class="slide">
-        <h1>Care Coordination</h1>
-        <div class="critical">
-            <h3>A Missed Connection</h3>
-            <p>Patient had <strong>active subspecialty care</strong> with scheduled follow-up. Hospitalization occurred when patient was <strong>due for his hematology appointment</strong>.</p>
-        </div>
-        <div class="box" style="margin-top:20px;">
-            <h3>Timeline</h3>
-            <p><strong>August 2025:</strong> Last hematology visit, patient stable, plan: "Return in 3 months"</p>
-            <p><strong>November 2025:</strong> Patient admitted with pneumonia, missed scheduled appointment, subspecialty team unaware</p>
-        </div>
-        <div class="box" style="margin-top:20px;">
-            <h3>Opportunities for Enhanced Coordination</h3>
-            <ul>
-                <li>Search for recent subspecialty visits on admission</li>
-                <li>Contact known subspecialists for complex patients</li>
-                <li>Review appointment schedule for upcoming visits</li>
-                <li>Coordinate discharge planning with established providers</li>
-                <li>Ensure subspecialists aware of hospitalization</li>
-            </ul>
-        </div>
-    </div>
-
-    <!-- SLIDE 12 -->
-    <div class="slide">
-        <h1>Systems Thinking</h1>
-        <div class="box">
-            <h3>Multiple Contributing Factors</h3>
-            <p><strong>Patient-Level:</strong> Progressive dementia, lives alone, medication non-compliance</p>
-            <p><strong>Provider-Level:</strong> Time constraints, cognitive biases, varying EMR proficiency</p>
-            <p><strong>System-Level:</strong> Problem list maintenance, EMR design, lack of diagnostic reconciliation, workflow pressures</p>
-        </div>
-        <div class="warning" style="margin-top:20px;">
-            <h3>Opportunities for System Improvement</h3>
-            <p><strong>Technology:</strong> Enhanced clinical decision support, automated problem list updates, alerts for discordant data</p>
-            <p><strong>Process:</strong> Diagnostic reconciliation (like med rec), structured admission workflows, protected chart review time</p>
-            <p><strong>Culture:</strong> Environment where discussing errors is encouraged, non-punitive, focused on learning</p>
-        </div>
-    </div>
-
-    <!-- SLIDE 13 -->
-    <div class="slide">
-        <h1>Immediate Actions (3:51 AM)</h1>
-        <div class="box">
-            <h3>DO NOW (Next 30 minutes):</h3>
-            <ul>
-                <li>✓ Update problem list: Add CLL/SLL Stage III</li>
-                <li>✓ Write overnight note documenting discovery</li>
-                <li>✓ Add labs to morning orders: CBC w/ diff, IgG/IgA/IgM, LDH, CD4</li>
-                <li>✓ Brief senior resident or covering attending</li>
-            </ul>
-        </div>
-        <div class="box" style="margin-top:20px;">
-            <h3>DO AT 8 AM:</h3>
-            <ul>
-                <li>Place STAT hematology consult</li>
-                <li>Discuss at morning rounds with attending</li>
-                <li>Review lab results</li>
-                <li>Call patient's established hematologist</li>
-            </ul>
-        </div>
-        <div class="box" style="margin-top:20px;">
-            <h3>DO BEFORE DISCHARGE:</h3>
-            <ul>
-                <li>Hematology recommendations obtained</li>
-                <li>Prophylaxis plan established (TMP-SMX if indicated)</li>
-                <li>Safe discharge coordination</li>
-                <li>Follow-up scheduled with hematology</li>
-            </ul>
-        </div>
-    </div>
-
-    <!-- SLIDE 14 -->
-    <div class="slide">
-        <h1>Key Takeaways</h1>
-        <div class="box">
-            <p><strong>1. Comprehensive Chart Review:</strong> Use SEARCH mnemonic. Critical information usually in chart.</p>
-        </div>
-        <div class="box">
-            <p><strong>2. CLL = Immunocompromised:</strong> Infection leading cause of morbidity. Check IgG, prophylaxis, coordinate care.</p>
-        </div>
-        <div class="box">
-            <p><strong>3. Clinical Picture > Labs:</strong> Clinical stability = success (IDSA). WBC normalization not required. Always check differential.</p>
-        </div>
-        <div class="box">
-            <p><strong>4. Stewardship in Complex Patients:</strong> Appropriate empiric therapy. Avoid unnecessary escalation in improving patients.</p>
-        </div>
-        <div class="box">
-            <p><strong>5. Care Coordination:</strong> Contact subspecialists. This patient missed hematology appointment due to hospitalization.</p>
-        </div>
-        <div class="box">
-            <p><strong>6. Systems Thinking:</strong> Multiple factors contribute. Focus on system improvements, not blame. Create learning culture.</p>
-        </div>
-    </div>
-
-    <!-- SLIDE 15 -->
-    <div class="slide">
-        <h1>Conclusion</h1>
-        <div class="box">
-            <h3>Case Summary</h3>
-            <p>82-year-old male with recurrent pneumonia demonstrates complexity of modern medical care and importance of systematic approaches to information gathering, clinical reasoning, and care coordination.</p>
-        </div>
-        <div class="warning" style="margin-top:30px;">
-            <h3>What We Learned</h3>
-            <ul>
-                <li>Value of comprehensive chart review using systematic approaches</li>
-                <li>How to recognize and manage immunocompromised patients</li>
-                <li>When to trust clinical picture over isolated lab values</li>
-                <li>How to apply stewardship in complex cases</li>
-                <li>Critical importance of care coordination</li>
-                <li>How systems thinking prevents future gaps</li>
-            </ul>
-        </div>
-        <div class="critical" style="margin-top:30px;text-align:center;">
-            <h2>Focus on Learning and Systems Improvement</h2>
-            <p style="font-size:1.2em;margin-top:15px;">Excellence in medicine requires both individual diligence and robust systems that support comprehensive care</p>
-        </div>
-    </div>
-
-    <div class="nav">
+    <div class="nav-buttons">
         <button id="prev" onclick="changeSlide(-1)">← Previous</button>
         <button id="next" onclick="changeSlide(1)">Next →</button>
     </div>
 
     <script>
-        let curr=0;
-        const slides=document.querySelectorAll('.slide');
-        const total=slides.length;
-        document.getElementById('tot').textContent=total;
-        function show(n){
-            slides[curr].classList.remove('active');
-            curr=(n+total)%total;
-            slides[curr].classList.add('active');
-            document.getElementById('curr').textContent=curr+1;
-            document.getElementById('prev').disabled=(curr===0);
-            document.getElementById('next').disabled=(curr===total-1);
-            window.scrollTo(0,0);
+        let current = 0;
+        const slides = document.querySelectorAll('.slide');
+        const total = slides.length;
+        
+        document.getElementById('total').textContent = total;
+        
+        function showSlide(n) {
+            slides[current].classList.remove('active');
+            current = (n + total) % total;
+            slides[current].classList.add('active');
+            
+            document.getElementById('current').textContent = current + 1;
+            document.getElementById('prev').disabled = (current === 0);
+            document.getElementById('next').disabled = (current === total - 1);
+            
+            window.scrollTo(0, 0);
         }
-        function changeSlide(d){show(curr+d);}
-        document.addEventListener('keydown',(e)=>{
-            if(e.key==='ArrowLeft')changeSlide(-1);
-            if(e.key==='ArrowRight')changeSlide(1);
+        
+        function changeSlide(dir) {
+            showSlide(current + dir);
+        }
+        
+        // Keyboard navigation
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowLeft') changeSlide(-1);
+            if (e.key === 'ArrowRight') changeSlide(1);
         });
-        let startX=0;
-        document.addEventListener('touchstart',(e)=>{startX=e.touches[0].clientX;});
-        document.addEventListener('touchend',(e)=>{
-            let endX=e.changedTouches[0].clientX;
-            if(startX-endX>50)changeSlide(1);
-            if(endX-startX>50)changeSlide(-1);
+        
+        // Touch swipe for iPad
+        let startX = 0;
+        document.addEventListener('touchstart', (e) => {
+            startX = e.touches[0].clientX;
         });
-        show(0);
+        
+        document.addEventListener('touchend', (e) => {
+            let endX = e.changedTouches[0].clientX;
+            if (startX - endX > 50) changeSlide(1);
+            if (endX - startX > 50) changeSlide(-1);
+        });
+        
+        showSlide(0);
     </script>
 </body>
 </html>
