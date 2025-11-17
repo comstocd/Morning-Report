@@ -339,7 +339,7 @@
             <div class="critical-box">
                 <h3>Finding #3: Critical Observation</h3>
                 <blockquote style="font-size: 1.2em; background: white;">
-                    "Constellation of findings suggestive of <strong>lymphomatous disorder</strong> with
+                    "Constellation of findings suggestive of <strong>lymphomatous disorder</strong> with 
                     multiple areas of <strong>lymphadenopathy</strong> in chest and upper abdomen"
                 </blockquote>
                 <h4 style="margin-top: 20px;">Lymphadenopathy:</h4>
@@ -569,7 +569,7 @@
         const slides = document.querySelectorAll('.slide');
         const totalSlides = slides.length;
         document.getElementById('total-slides').textContent = totalSlides;
-
+        
         function showSlide(n) {
             slides[currentSlide].classList.remove('active');
             currentSlide = (n + totalSlides) % totalSlides;
@@ -579,16 +579,16 @@
             document.getElementById('nextBtn').disabled = currentSlide === totalSlides - 1;
             slides[currentSlide].scrollTop = 0;
         }
-
+        
         function changeSlide(direction) {
             showSlide(currentSlide + direction);
         }
-
+        
         document.addEventListener('keydown', (e) => {
             if (e.key === 'ArrowLeft') changeSlide(-1);
             if (e.key === 'ArrowRight') changeSlide(1);
         });
-
+        
         let touchStartX = 0;
         let touchEndX = 0;
         document.addEventListener('touchstart', (e) => { touchStartX = e.changedTouches[0].screenX; });
@@ -598,7 +598,7 @@
             if (touchEndX < touchStartX - swipeThreshold) changeSlide(1);
             if (touchEndX > touchStartX + swipeThreshold) changeSlide(-1);
         });
-
+        
         showSlide(0);
     </script>
 </body>
