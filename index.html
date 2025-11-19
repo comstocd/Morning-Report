@@ -342,40 +342,52 @@ button:disabled { background: #95a5a6; cursor: not-allowed; }
         </div>
     </div>
 
-    <!-- SLIDE 6: Initial Imaging -->
-    <div class="slide">
-        <h1>Imaging Studies</h1>
-        <div class="timeline">
-            <div class="timeline-item">
-                <div class="timeline-date">Initial Admission Chest X-Ray</div>
-                <p><strong>Finding:</strong> No acute cardiopulmonary changes</p>
-                <p><em>Patient admitted for observation</em></p>
-            </div>
-            <div class="timeline-item">
-                <div class="timeline-date">Day 7 Chest X-Ray</div>
-                <p><strong>Finding:</strong> Patchy non-consolidated right lower lobe airspace opacities</p>
-                <p><strong>Impression:</strong> Concerning for pneumonia</p>
-                <p><em>Prompted antibiotics and further workup</em></p>
-            </div>
-            <div class="timeline-item">
-                <div class="timeline-date">CT Head (without contrast)</div>
-                <p><strong>Finding:</strong> No acute intracranial process or hemorrhage</p>
-                <p><em>Obtained for altered mental status evaluation</em></p>
-            </div>
+
+<!-- SLIDE 6: Imaging Studies -->
+<div class="slide">
+    <h1>Imaging Studies</h1>
+    
+    <div class="two-col">
+        <div>
+            <img src="path/to/cxr_image.png" alt="Chest X-ray 11/17/2025" style="width: 100%; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.2);">
+            <p style="text-align: center; margin-top: 8px; font-size: 0.9em; color: #555;"><strong>Chest X-ray:</strong> AP view, 11/17/2025</p>
         </div>
-        <div class="box" style="margin-top: 30px;">
-            <h3>ECG Findings</h3>
-            <ul>
-                <li>Sinus rhythm, rate 63 bpm</li>
-                <li>T wave inversions in lead III</li>
-                <li>No ST elevations or depressions</li>
-                <li>QTc: 439 ms (normal)</li>
-            </ul>
-        </div>
-        <div class="success">
-            <p><strong>Initial Antibiotic:</strong> Ceftriaxone 1g IV given at outside hospital</p>
+        
+        <div>
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div class="timeline-date">Initial Admission CXR</div>
+                    <p><strong>Finding:</strong> Bibasilar opacities</p>
+                    <p><em>Prompted admission and antibiotic therapy</em></p>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-date">Day 7 CXR (11/17)</div>
+                    <p><strong>Finding:</strong> Patchy non-consolidated right lower lobe airspace opacities</p>
+                    <p><strong>Impression:</strong> Concerning for pneumonia</p>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-date">CT Head (without contrast)</div>
+                    <p><strong>Finding:</strong> No acute intracranial process or hemorrhage</p>
+                    <p><em>Obtained for altered mental status</em></p>
+                </div>
+            </div>
+            
+            <div class="box" style="margin-top: 10px;">
+                <h3>ECG Findings</h3>
+                <ul class="compact-list">
+                    <li>Sinus rhythm, rate 63 bpm</li>
+                    <li>T wave inversions in lead III</li>
+                    <li>No ST elevations or depressions</li>
+                    <li>QTc: 439 ms (normal)</li>
+                </ul>
+            </div>
         </div>
     </div>
+    
+    <div class="success" style="margin-top: 10px;">
+        <p><strong>Initial Antibiotic:</strong> Ceftriaxone 1g IV given at outside hospital</p>
+    </div>
+</div>
 
     <!-- SLIDE 7: Differential Diagnosis Pause -->
     <div class="slide">
@@ -1454,6 +1466,7 @@ button:disabled { background: #95a5a6; cursor: not-allowed; }
     </script>
 </body>
 </html>
+
 
 
 
